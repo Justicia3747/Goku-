@@ -11,9 +11,8 @@
 </head>
 <body>
 
-<h1>🎵 Reproductor de sonido</h1>
-<button onclick="play()">▶️ Reproducir</button>
-<button onclick="pause()">⏸️ Pausar</button>
+<button onclick="...">...</button>
+<audio id="miAudio" src="TU_LINK_AQUI"></audio>
 
 <!-- Iframe oculto -->
 <div id="player"></div>
