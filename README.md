@@ -2,45 +2,55 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reproductor de audio</title>
+  <title>Reproductor YouTube</title>
   <style>
-    /* Hacemos el iframe invisible */
-    #yt-audio { display: none; }
+    #player {
+      display: none; /* Ocultamos el video */
+    }
   </style>
 </head>
 <body>
 
-<h1>Reproduciendo audio desde YouTube Music</h1>
-<button id="play-btn">▶️ Reproducir</button>
-<button id="pause-btn">⏸️ Pausar</button>
+<h1>🎵 Reproductor de sonido</h1>
+<button onclick="play()">▶️ Reproducir</button>
+<button onclick="pause()">⏸️ Pausar</button>
 
-<!-- Iframe oculto que carga el audio del video -->
-<iframe
-  id="yt-audio"
-  src="https://www.youtube.com/embed/6y7goU0h8sY?autoplay=0&loop=1&playlist=6y7goU0h8sY"
-  allow="autoplay"
-></iframe>
+<!-- Iframe oculto -->
+<div id="player"></div>
 
 <script>
-// API de iframe de YouTube para controlar el reproductor
-let player;
+  let player;
 
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('yt-audio');
-}
+  // Carga el API de YouTube
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
 
-// Carga el API asincrónicamente
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-document.head.appendChild(tag);
+  // Se llama automáticamente cuando el API se carga
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '0',
+      width: '0',
+      videoId: '6y7goU0h8sY', // ID del video
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        loop: 1,
+        playlist: '6y7goU0h8sY'
+      },
+      events: {
+        'onReady': () => console.log('Listo')
+      }
+    });
+  }
 
-// Botones control
-document.getElementById('play-btn').addEventListener('click', () => {
-  if (player && player.playVideo) player.playVideo();
-});
-document.getElementById('pause-btn').addEventListener('click', () => {
-  if (player && player.pauseVideo) player.pauseVideo();
-});
+  function play() {
+    if (player) player.playVideo();
+  }
+
+  function pause() {
+    if (player) player.pauseVideo();
+  }
 </script>
 
 </body>
